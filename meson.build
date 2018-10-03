@@ -39,9 +39,14 @@ dependencies = [
     dependency('granite'),
     dependency('gtk+-3.0'),
     dependency('json-glib-1.0'),
-    dependency('libsoup-2.4'),
-    dependency('unity')
+    dependency('libsoup-2.4')
 ]
+
+if get_option('libunity')
+    unity_dep = dependency('unity')
+    add_project_arguments('--define=UNITY_SUPPORT=1', language : 'vala')
+    dependencies += unity_dep
+endif
 
 e = executable('com.github.calo001.fondo',
     sources,

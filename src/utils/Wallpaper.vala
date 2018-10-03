@@ -42,7 +42,7 @@ namespace App.Utils {
         private string BASE_DIR = Path.build_filename (Environment.get_user_data_dir (), "backgrounds") + "/";
 
         // Progress bar in plank
-        private LauncherEntry launcher;
+        //private LauncherEntry launcher;
 
         /*********************************** 
             Constructor
@@ -56,7 +56,7 @@ namespace App.Utils {
             this.bar = bar;
             this.img_file_name = username + "_" + id_photo + ".jpeg";
             this.full_picture_path = BASE_DIR + img_file_name;
-            this.launcher = LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
+            //this.launcher = LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
         }
 
         /*********************************************************************** 
@@ -111,7 +111,7 @@ namespace App.Utils {
             var progress = 0.0;
 
             if (!file_path.query_exists ()) {
-                launcher.progress_visible = true;
+                toogle_progress (true);
                 file_from_uri.copy_async.begin (file_path, FileCopyFlags.OVERWRITE | FileCopyFlags.ALL_METADATA, GLib.Priority.DEFAULT, null, (current_num_bytes, total_num_bytes) => {
 		        // Report copy-status:
                     progress = (double) current_num_bytes / total_num_bytes;
@@ -122,7 +122,7 @@ namespace App.Utils {
 		            //try {
 			            //bool tmp = file_from_uri.copy_async.end (res);
 			            //print ("Result: %s\n", tmp.to_string ());
-                        launcher.progress_visible = false;
+                        toogle_progress (false);
                         finish_download ();
 		            //} catch (Error e) {
 			            //show_message ("Error", e.message, "dialog-error");
@@ -138,6 +138,16 @@ namespace App.Utils {
             print("\nDOWNLOAD END\n");
             loop.run ();
             return true;
+        }
+
+        /*********************************************************************** 
+            Method to toogle the progress
+        ***********************************************************************/
+        public void toogle_progress (bool show) {
+            #if UNITY_SUPPORT
+            var launcher = LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
+            launcher.progress_visible = show;
+            #endif
         }
 
         /*********************************************************************** 
@@ -160,7 +170,10 @@ namespace App.Utils {
         ***********************************************************************/
         private void show_progress (double progress) {
             bar.set_fraction (progress);
+            #if UNITY_SUPPORT
+            var launcher = LauncherEntry.get_for_desktop_id (Constants.ID + ".desktop");
             launcher.progress = progress;
+            #endif
         }
 
         /*********************************************************************** 
