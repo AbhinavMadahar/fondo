@@ -53,6 +53,10 @@ namespace App.Views {
             photos.sort(compare);
 
             foreach (var photo in photos) {
+                float aspect_ratio = photo.width / photo.height;
+                if (aspect_ratio < 1) {
+                    continue;
+                }
                 var card = new CardPhotoView (photo);
                 card.valign = Gtk.Align.START;
                 this.add(card);
