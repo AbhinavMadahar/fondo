@@ -83,6 +83,35 @@ namespace App.Widgets {
 
             this.pack_start(link_unsplash);
             this.pack_end (mode_switch);
+
+            // Create & fill a ListStore:
+		    Gtk.ListStore list_store = new Gtk.ListStore (1, typeof (string));
+		    Gtk.TreeIter iter;
+
+		    list_store.append (out iter);
+		    list_store.set (iter, 0, "Both landscape and portrait images");
+		    list_store.append (out iter);
+		    list_store.set (iter, 0, "Landscape images only");
+		    list_store.append (out iter);
+		    list_store.set (iter, 0, "Portrait images only");
+
+		    // The Box:
+		    Gtk.ComboBox box = new Gtk.ComboBox.with_model (list_store);
+		    this.add (box);
+
+		    Gtk.CellRendererText renderer = new Gtk.CellRendererText ();
+		    box.pack_start (renderer, true);
+		    box.add_attribute (renderer, "text", 0);
+		    box.active = 0;
+
+		    box.changed.connect (() => {
+			    Value val1;
+
+			    box.get_active_iter (out iter);
+			    list_store.get_value (iter, 0, out val1);
+
+			    print ("Selection: %s\n", (string) val1);
+		    });
         }
 
         /************************ 
