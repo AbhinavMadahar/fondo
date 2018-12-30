@@ -47,7 +47,7 @@ namespace App.Views {
             this.h_photo = (int) photo.height;
             this.photo = photo;
             get_style_context ().add_class ("prev-window");
-            
+
 		    fullscreen ();
 
             // Detect ESC key to close window

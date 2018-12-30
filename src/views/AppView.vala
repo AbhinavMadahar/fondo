@@ -53,10 +53,14 @@ namespace App.Views {
             photos.sort(compare);
 
             foreach (var photo in photos) {
+                // if the user wants, we can show only
+                // the landscape or only the portrait images.
+
                 float aspect_ratio = photo.width / photo.height;
                 if (aspect_ratio < 1) {
                     continue;
                 }
+
                 var card = new CardPhotoView (photo);
                 card.valign = Gtk.Align.START;
                 this.add(card);

@@ -65,7 +65,7 @@ namespace App.Widgets {
             });
 
             App.Application.settings.bind ("use-dark-theme", mode_switch, "active", GLib.SettingsBindFlags.DEFAULT);
-            
+
             /*******************
              * Unsplash button 
             *******************/

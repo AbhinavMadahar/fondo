@@ -29,14 +29,13 @@ namespace App.Views {
      */
     public class AppViewError : Gtk.Box {
         public signal void close_window();
-        
+
         public AppViewError() {
             // Configuring UI
             this.orientation = Gtk.Orientation.VERTICAL;
             this.halign = Gtk.Align.CENTER;
             this.valign = Gtk.Align.CENTER;
 
-            
             var image = new Gtk.Image.from_icon_name  ("network-error", Gtk.IconSize.DIALOG);
 		    var label_title = new Gtk.Label ("Network Error");
 		    var label_description = new Gtk.Label ("Check the network connection.");

@@ -212,8 +212,6 @@ namespace App.Views {
         public void setup_wallpaper (string opt = "zoom") {
             this.set_sensitive (false);
             revealer.set_reveal_child (true);
-            
-            print("Updating wallpaper.");
 
             string? url_photo = connection.get_url_photo(photo.links_download_location);
             wallpaper = new Wallpaper (url_photo, photo.id, photo.username, bar);
