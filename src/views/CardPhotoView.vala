@@ -70,11 +70,11 @@ namespace App.Views {
                     File from url thumb
             ******************************************/
             file_photo = File.new_for_uri (photo.urls_thumb);
-            
+
             /******************************************
                     Create AsyncImage object
             ******************************************/
-            
+
             image = new Granite.AsyncImage(true, true);
             var w_max = 280;
             var h_max = 460;
@@ -210,14 +210,15 @@ namespace App.Views {
         * Update the wallpaper
         **************************************************/
         public void setup_wallpaper (string opt = "zoom") {
-            this.set_sensitive (false);  
+            this.set_sensitive (false);
             revealer.set_reveal_child (true);
+            
+            print("Updating wallpaper.");
 
             string? url_photo = connection.get_url_photo(photo.links_download_location);
             wallpaper = new Wallpaper (url_photo, photo.id, photo.username, bar);
             wallpaper.finish_download.connect (() => {
                 this.set_sensitive (true);
-                //print("Finish download");        
             });
             wallpaper.update_wallpaper (opt);
         }
